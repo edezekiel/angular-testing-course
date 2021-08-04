@@ -7,6 +7,7 @@ import {
 import { COURSES } from "../../../../server/db-data";
 import { Course } from "../model/course";
 import { request } from "express";
+import { HttpErrorResponse } from "@angular/common/http";
 
 describe("CoursesService", () => {
   let coursesService: CoursesService;
@@ -65,6 +66,23 @@ describe("CoursesService", () => {
     req.flush({
       ...COURSES[12],
       ...changes,
+    });
+  });
+
+  it("should give an error if save course fails", () => {
+    const changes: Partial<Course> = {
+      titles: { description: "Testing Course" },
+    };
+    coursesService.saveCourse(12, changes).subscribe(
+      () => fail("the save course operation should have failed"),
+      (error: HttpErrorResponse) => expect(error.status).toBe(500)
+    );
+
+    const req = httpTestingController.expectOne("/api/courses/12");
+    expect(req.request.method).toEqual("PUT");
+    req.flush("Save course failed", {
+      status: 500,
+      statusText: "Internal Server Error",
     });
   });
 });
