@@ -5,12 +5,12 @@ describe("CalculatorService", () => {
   it("should add two numbers", () => {
     const calculator = new CalculatorService(new LoggerService());
     const result = calculator.add(2, 2);
-    expect(result).toEqual(4);
+    expect(result).toBe(4, 'unexpected add result');
   });
 
   it("should subtract two numbers", () => {
     const calculator = new CalculatorService(new LoggerService());
     const result = calculator.subtract(2, 2);
-    expect(result).toEqual(0);
+    expect(result).toBe(0);
   });
 });
