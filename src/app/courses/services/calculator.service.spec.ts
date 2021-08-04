@@ -1,9 +1,16 @@
-describe('CalculatorService', () => {
-  it('should add two numbers', () => {
-    pending();
+import { CalculatorService } from "./calculator.service";
+import { LoggerService } from "./logger.service";
+
+describe("CalculatorService", () => {
+  it("should add two numbers", () => {
+    const calculator = new CalculatorService(new LoggerService());
+    const result = calculator.add(2, 2);
+    expect(result).toEqual(4);
   });
 
-  it('should subtract two numbers', () => {
-    pending();
+  it("should subtract two numbers", () => {
+    const calculator = new CalculatorService(new LoggerService());
+    const result = calculator.subtract(2, 2);
+    expect(result).toEqual(0);
   });
 });
