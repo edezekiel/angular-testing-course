@@ -5,6 +5,7 @@ import {
   flush,
   flushMicrotasks,
   TestBed,
+  waitForAsync,
 } from "@angular/core/testing";
 import { CoursesModule } from "../courses.module";
 import { DebugElement } from "@angular/core";
@@ -28,7 +29,24 @@ describe("HomeComponent", () => {
   let component: HomeComponent;
   let el: DebugElement;
 
-  beforeEach(() => {});
+  beforeEach(
+    waitForAsync(() => {
+      const coursesServiceSpy = jasmine.createSpyObj("CoursesService", [
+        "findAllCourses",
+      ]);
+
+      TestBed.configureTestingModule({
+        imports: [CoursesModule, NoopAnimationsModule],
+        providers: [{ provide: CoursesService, useValue: coursesServiceSpy }],
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(HomeComponent);
+          component = fixture.componentInstance;
+          el = fixture.debugElement;
+        });
+    })
+  );
 
   it("should create the component", () => {
     expect(component).toBeTruthy();
