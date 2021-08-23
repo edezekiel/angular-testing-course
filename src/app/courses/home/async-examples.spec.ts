@@ -17,9 +17,10 @@ describe('Async Testing Examples', () => {
     setTimeout(() => {
       console.log('running assertions');
       test = true;
-      expect(test).toBeTruthy();
     }, 1000);
 
     tick(1000);
+
+    expect(test).toBeTruthy();
   }));
 });
